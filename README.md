@@ -3,7 +3,8 @@
 Este projeto usa um único repositório Git na raiz.
 
 - `app/`: aplicação Next.js.
-- `backend/`: API Fastify em TypeScript; primeira etapa com rota `/health`.
+- `backend/`: API Fastify em TypeScript, com PostgreSQL, autenticação de demonstração
+  por sessão e consulta de chamados do funcionário autenticado.
 - `docs/`: documentação de arquitetura e interface.
 - `database/`: migrações SQL, dados de exemplo e testes do PostgreSQL.
 - `scripts/db.sh`: comandos para executar e administrar o banco local.
@@ -39,9 +40,14 @@ Para iniciar a API, em outro terminal (Node.js 24):
 ```bash
 cd backend
 npm ci
+# Apenas se backend/.env ainda não existir; ajuste os dados do banco:
+cp .env.example .env
+npm run db:check
 npm run dev
 ```
 
 Acesse `http://127.0.0.1:3333/health`. Veja [o guia do backend](backend/README.md)
 para entender o fluxo, a configuração e os comandos de validação. A conexão
-com PostgreSQL e as rotas de chamados serão implementadas nas próximas etapas.
+PostgreSQL, login, logout e listagem de chamados por sessão estão implementados.
+O guia inclui exemplos de requisições. O login das telas ainda usa a demonstração
+local e será integrado à API em uma próxima etapa.

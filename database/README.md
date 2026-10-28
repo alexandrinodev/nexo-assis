@@ -1,7 +1,8 @@
 # Banco local
 
-Esta etapa implementa o armazenamento de funcionários, chamados e histórico.
-Não conecta as telas ao banco e ainda não implementa o serviço HTTP de chamados.
+Implementa o armazenamento de funcionários, chamados, histórico e sessões.
+O backend já oferece login de demonstração e consulta de chamados por sessão;
+as telas ainda não estão conectadas à API.
 
 ## Iniciar
 
@@ -32,18 +33,22 @@ a conta administrativa local para aplicar migrações e validar a modelagem.
   local e mantém os dados em um volume nomeado.
 - `migrations/001_employees_and_tickets.sql`: cria schemas, tipos, tabelas,
   índices e restrições. Registra sua versão em `app.schema_migrations`.
+- `migrations/002_sessions.sql`: cria sessões com referência ao funcionário,
+  hash único do token e prazo de expiração.
 - `seeds/001_demo.sql`: insere cinco funcionários, cinco chamados e nove
   eventos, sem substituir registros existentes ao executar novamente.
 - `tests/001_constraints.sql`: verifica operações válidas e rejeições esperadas,
   revertendo os registros de teste ao final.
+- `tests/002_sessions.sql`: verifica unicidade, formato do hash, expiração e
+  integridade referencial de sessões, também revertendo os registros de teste.
 
 Uma migração é uma alteração versionada na estrutura do banco. Depois que ela
 é aplicada, alterações seguintes devem usar um novo arquivo numerado, em vez
 de editar a migração antiga. Executar `migrate` novamente pula versões aplicadas.
 Usamos SQL diretamente nesta etapa para tornar visíveis as relações e as
-restrições; nenhuma biblioteca de acesso ao banco foi adicionada à aplicação.
+restrições. O backend usa o driver `pg` para executar SQL pelo Node.js.
 
-O schema `app` agrupa `employees` e o controle de migrações. O schema
+O schema `app` agrupa `employees`, `sessions` e o controle de migrações. O schema
 `service_desk` agrupa `tickets`, `ticket_events` e seus tipos. Campos do banco
 usam `snake_case`; contratos TypeScript poderão usar `camelCase`, com conversão
 explícita na camada de acesso a dados.

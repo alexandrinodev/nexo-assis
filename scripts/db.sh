@@ -23,7 +23,11 @@ case "${1:-help}" in
     done
     ;;
   seed) sql_file /database/seeds/001_demo.sql ;;
-  test) sql_file /database/tests/001_constraints.sql ;;
+  test)
+    for test_file in database/tests/*.sql; do
+      sql_file "/$test_file"
+    done
+    ;;
   psql) compose exec db sh -c 'exec psql -X -U "$POSTGRES_USER" -d "$POSTGRES_DB"' ;;
   stop) compose stop db ;;
   status) compose ps ;;

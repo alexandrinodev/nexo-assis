@@ -1,0 +1,33 @@
+{
+  "name": "nexo-assist-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env --watch --import=tsx src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node --env-file-if-exists=.env dist/server.js",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "db:check": "node --env-file-if-exists=.env --import=tsx src/scripts/check-database.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:integration": "npm run build && node --env-file-if-exists=.env --test test/integration/*.test.mjs"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^11.1.5",
+    "fastify": "^5.0.0",
+    "pg": "^8.23.1",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/pg": "^8.23.1",
+    "prettier": "^3.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "~5.9.0"
+  }
+}

@@ -1,0 +1,9 @@
+import { env } from '../config/env.js'
+
+export const databaseConfig = {
+  host: env.PGHOST,
+  port: env.PGPORT,
+  database: env.PGDATABASE,
+  user: env.PGUSER,
+  password: env.PGPASSWORD,
+}
